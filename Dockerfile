@@ -11,6 +11,8 @@ ADD vendor/qemu/qemu-arm-static /usr/bin/
 
 RUN pacman --noconfirm -Syu 
 
+RUN pacman-db-upgrade
+
 # install dependencies
 RUN pacman --noconfirm -S python python-pip git ffmpeg
 
