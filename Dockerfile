@@ -4,15 +4,15 @@ MAINTAINER Dag Einar Monsen "me@dag.im"
 
 # Bust dockerfile with git hash
 # `sed -ri -e "s/(BUST_DOCKERFILE\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
-ENV BUST_DOCKERFILE 7b439d9
+ENV BUST_DOCKERFILE 12efad7
+
+# add qemu
+ADD vendor/qemu/qemu-arm-static /usr/bin/
 
 RUN pacman --noconfirm -Syu 
 
 # install dependencies
 RUN pacman --noconfirm -S python python-pip git ffmpeg
-
-# add qemu
-ADD vendor/qemu/qemu-arm-static /usr/bin/
 
 # add psips
 ADD vendor/psips/bin/psips /usr/bin/
