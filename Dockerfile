@@ -11,6 +11,9 @@ RUN pacman --noconfirm -Syu
 # install dependencies
 RUN pacman --noconfirm -S python python-pip git ffmpeg
 
+# add qemu
+ADD vendor/qemu/qemu-arm-static /usr/bin/
+
 # add psips
 ADD vendor/psips/bin/psips /usr/bin/
 
