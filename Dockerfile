@@ -14,7 +14,7 @@ RUN pacman --noconfirm -Syu
 RUN pacman-db-upgrade
 
 # install dependencies
-RUN pacman --noconfirm -S python python-pip git ffmpeg
+RUN pacman --noconfirm -S ffmpeg
 
 # add psips
 ADD vendor/psips/bin/psips /usr/bin/
@@ -28,11 +28,17 @@ ADD vendor/etc/ld.so.conf.d/00-raspberrypi-firmware.conf /etc/ld.so.conf.d/
 # register mmal library with ldd
 RUN ldconfig
 
+
+ADD vendor/python/python2.7-static /usr/bin/python
+ADD vendor/python/get-pip.py /usr/bin/
+
+RUN get-pip.py
+
 # bust application cache with git hash
 # `sed -ri -e "s/(BUST_APP\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
 ENV BUST_APP 7b439d9
 
-RUN git clone https://github.com/monsendag/rpi-cameraserver.git /app
+ADD app /app
 
 # install picamera
 RUN cd /app && pip install -r requirements.txt
