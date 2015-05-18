@@ -14,7 +14,7 @@ RUN pacman --noconfirm -Syu
 RUN pacman-db-upgrade
 
 # install dependencies
-RUN pacman --noconfirm -S ffmpeg
+RUN pacman --noconfirm -S ffmpeg python python-pip
 
 # add psips
 ADD vendor/psips/bin/psips /usr/bin/
@@ -27,14 +27,6 @@ ADD vendor/etc/ld.so.conf.d/00-raspberrypi-firmware.conf /etc/ld.so.conf.d/
 
 # register mmal library with ldd
 RUN ldconfig
-
-
-ADD vendor/python/python2.7-static /usr/bin/python
-
-ADD vendor/python/get-pip.py /usr/bin/
-
-RUN get-pip.py
->>>>>>> parent of c66fe40... switch from pip to setuptools
 
 # bust application cache with git hash
 # `sed -ri -e "s/(BUST_APP\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
