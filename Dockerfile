@@ -30,9 +30,9 @@ RUN ldconfig
 
 
 ADD vendor/python/python2.7-static /usr/bin/python
-ADD https://bootstrap.pypa.io/ez_setup.py /usr/bin/
+ADD vendor/python/ez_setup.py /usr/bin/
 
-RUN python /usr/bin/ez_setup.py
+RUN ez_setup.py
 
 # bust application cache with git hash
 # `sed -ri -e "s/(BUST_APP\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
