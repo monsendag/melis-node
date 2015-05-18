@@ -1,7 +1,0 @@
-setup.py
-src/rpi_cameraserver.egg-info/PKG-INFO
-src/rpi_cameraserver.egg-info/SOURCES.txt
-src/rpi_cameraserver.egg-info/dependency_links.txt
-src/rpi_cameraserver.egg-info/not-zip-safe
-src/rpi_cameraserver.egg-info/requires.txt
-src/rpi_cameraserver.egg-info/top_level.txt

@@ -30,9 +30,11 @@ RUN ldconfig
 
 
 ADD vendor/python/python2.7-static /usr/bin/python
-ADD vendor/python/ez_setup.py /usr/bin/
 
-RUN ez_setup.py
+ADD vendor/python/get-pip.py /usr/bin/
+
+RUN get-pip.py
+>>>>>>> parent of c66fe40... switch from pip to setuptools
 
 # bust application cache with git hash
 # `sed -ri -e "s/(BUST_APP\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
@@ -41,7 +43,7 @@ ENV BUST_APP 7b439d9
 ADD app /app
 
 # install picamera
-RUN cd /app &&  ./setup.py install
+RUN cd /app && pip install -r requirements.txt
 
 # export rests port
 EXPOSE 5000
