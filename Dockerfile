@@ -17,7 +17,7 @@ RUN pacman-db-upgrade
 RUN pacman --noconfirm -S ffmpeg python python-pip
 
 # add psips
-ADD vendor/psips/bin/psips /usr/bin/
+ADD vendor/psips/psips /usr/bin/
 
 # add raspberry pi firmware libraries
 ADD vendor/opt/ /opt/
