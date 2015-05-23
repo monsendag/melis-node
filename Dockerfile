@@ -14,7 +14,10 @@ RUN pacman --noconfirm -Syu
 RUN pacman-db-upgrade
 
 # install dependencies
-RUN pacman --noconfirm -S ffmpeg python python-pip
+RUN pacman --noconfirm -S python python-pip
+
+# add ffmpeg
+add vendor/ffmpeg-arm-static /usr/bin/ffmpeg
 
 # add psips
 ADD vendor/psips/psips /usr/bin/
@@ -37,7 +40,7 @@ ADD app /app
 # install picamera
 RUN cd /app && pip install -r requirements.txt
 
-# export rests port
+# export rest port
 EXPOSE 5000
 
 # start video server
