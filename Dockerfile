@@ -1,23 +1,12 @@
-FROM cellofellow/rpi-arch
+FROM sander85/rpi-busybox
 
 MAINTAINER Dag Einar Monsen "me@dag.im"
-
-# Bust dockerfile with git hash
-# `sed -ri -e "s/(BUST_DOCKERFILE\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
-ENV BUST_DOCKERFILE 12efad7
 
 # add qemu
 ADD vendor/qemu/qemu-arm-static /usr/bin/
 
-RUN pacman --noconfirm -Syu 
-
-RUN pacman-db-upgrade
-
-# install dependencies
-RUN pacman --noconfirm -S python python-pip
-
 # add ffmpeg
-add vendor/ffmpeg-arm-static /usr/bin/ffmpeg
+add vendor/ffmpeg/ffmpeg-arm-static /usr/bin/ffmpeg
 
 # add psips
 ADD vendor/psips/psips /usr/bin/
@@ -31,9 +20,7 @@ ADD vendor/etc/ld.so.conf.d/00-raspberrypi-firmware.conf /etc/ld.so.conf.d/
 # register mmal library with ldd
 RUN ldconfig
 
-# bust application cache with git hash
-# `sed -ri -e "s/(BUST_APP\s+).*/\1$(git rev-parse --short HEAD)/" Dockerfile`
-ENV BUST_APP 7b439d9
+ADD vendor/python/python2.7-static /usr/bin/python
 
 ADD app /app
 
