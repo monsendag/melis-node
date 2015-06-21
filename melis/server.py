@@ -13,12 +13,15 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(name)s] %(leveln
 try:
     camera = Camera(PiCamera())
 
+    # init flask app
     app = Flask(__name__)
+    
+    # enable CORS headers
     CORS(app)
 
     @app.route("/")
     def hello():
-        return "rpi-cameraserver!"
+        return "Melis camera server"
 
     @app.route("/still")
     def still():
@@ -33,8 +36,9 @@ try:
     def stop_stream():
         camera.stop_recording()
         return Response('{"message": "stopping"}')
-        
 
+
+    # serve HLS manifest and segments
     @app.route("/stream/<path:filename>")
     def serve_stream_data(filename):
         return send_from_directory('stream', filename)
@@ -42,13 +46,11 @@ try:
     app.run(host='0.0.0.0')
     
     
-    #camera.stop()
     
 except KeyboardInterrupt:
-    print("stooooppp")
+    print("stopping")
     raise
 
 
 except:
-    print("Caught it!")
     print(traceback.format_exc())
