@@ -1,12 +1,15 @@
-FROM sander85/rpi-busybox
+FROM cellofellow/rpi-arch
 
 MAINTAINER Dag Einar Monsen "me@dag.im"
 
-# add qemu
+# install python
+RUN pacman -S python
+
+# add qemu static binary (for executing on x86)
 ADD vendor/qemu/qemu-arm-static /usr/bin/
 
-# add ffmpeg
-add vendor/ffmpeg/ffmpeg-arm-static /usr/bin/ffmpeg
+# add ffmpeg (compiled for rpi)
+ADD vendor/ffmpeg/ffmpeg-arm-static /usr/bin/ffmpeg
 
 # add psips
 ADD vendor/psips/psips /usr/bin/
@@ -20,15 +23,10 @@ ADD vendor/etc/ld.so.conf.d/00-raspberrypi-firmware.conf /etc/ld.so.conf.d/
 # register mmal library with ldd
 RUN ldconfig
 
-ADD vendor/python/python2.7-static /usr/bin/python
-
-ADD app /app
-
-# install picamera
-RUN cd /app && pip install -r requirements.txt
+ADD build.tar.gz /app/
 
 # export rest port
 EXPOSE 5000
 
 # start video server
-CMD /app/server.py
+ENTRYPOINT /app/server.py
